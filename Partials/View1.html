@@ -1,0 +1,19 @@
+<div class="container" ng-controller = "SimpleController">
+	Name: 
+	<input type="text" name="username" ng-model = "username">
+
+	<ul>
+		<li ng-repeat = "name in names | filter: username | orderBy: 'name'">{{ name.name }} - {{ name.city | uppercase}}</li>
+	</ul>
+	
+	</br>
+	Customer Name: 
+	<input type="text" name="newuser" ng-model = "newuser.name">
+	</br>
+	Customer City: 
+	<input type="text" name="newcity" ng-model = "newuser.city">
+	</br>
+	<button ng-click = "addUser()">Add User</button>
+	</br>
+	<a href="#/view2">View2</a>
+</div>

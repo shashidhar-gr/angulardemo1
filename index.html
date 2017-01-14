@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app = "demoApp">
+<head>
+	<title></title>
+</head>
+<body>
+	
+	<div>
+		<ng-view></ng-view>
+	</div>
+
+	<script type="text/javascript" src = "angular.min.js"></script>
+	<script type="text/javascript" src = "angular-route.min.js"></script>
+	<script type="text/javascript">
+		
+		var demoApp = angular.module('demoApp', ['ngRoute']);
+
+		demoApp.config(function($routeProvider) {
+
+			$routeProvider.when('/', {
+				templateUrl: '/Partials/View1.html',
+				controller: 'SimpleController'
+			})
+			.when('/view2', {
+				templateUrl: '/Partials/View2.html',
+				controller: 'SimpleController'
+			})
+			.otherwise({
+				redirectTo: '/'
+			})
+		});
+
+		demoApp.factory('SimpleFactory', function() {
+			var factory = {};
+			
+			var customers = [{name: 'shashidhar', city: 'tumkur'}, {name: 'ravi', city: 'madhugiri'}, {name: 'shyla', 'city': 'bellara'}, {name: 'shivanna', city: 'bellara'}];
+
+			factory.getCustomers = function() {
+				return customers;
+			}
+
+			factory.addCustomer = function(newuser) {
+				customers.push({name: newuser.name, city: newuser.city});
+			}
+
+			return factory;
+		});
+
+		var controllers = {};
+		controllers.SimpleController = function ($scope, SimpleFactory) {
+			$scope.names = [];
+
+			init();
+
+			function init(){
+				$scope.names = SimpleFactory.getCustomers();
+			};
+
+			$scope.addUser = function() {
+				var newuser = {};
+				newuser.name = $scope.newuser.name;
+				newuser.city = $scope.newuser.city;
+				SimpleFactory.addCustomer(newuser);
+			}
+		}
+		demoApp.controller(controllers);
+		
+	</script>	
+</body>
+</html>
